@@ -1,0 +1,7 @@
+service example_service /odm/bin/example_service
+    class hal
+    user system
+    group system
+
+on boot
+    start example_service

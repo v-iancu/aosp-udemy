@@ -1,0 +1,51 @@
+ cc_binary {
+    name: "example_service",
+    srcs: ["native/src/**/*.cpp"],
+    local_include_dirs: ["native/src/impl"],
+    init_rc: ["example_service.rc"],
+    device_specific: true,
+    shared_libs: [
+        "liblog",
+        "libutils",
+        "libbase",
+        "libbinder_ndk",
+        "example.service.api-ndk_platform"
+    ],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+        "-Wshadow"
+    ]
+}
+
+aidl_interface {
+    name: "example.service.api",
+    vendor_available: true,
+    srcs: ["interfaces/**/*.aidl"],
+    local_include_dir: "interfaces",
+
+    stability: "vintf",
+    backend: {
+        java: {
+            enabled: true,
+            platform_apis: true,
+        },
+        cpp: {
+            enabled: true,
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+    frozen: true,
+
+}
